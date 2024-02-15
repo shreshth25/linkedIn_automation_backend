@@ -58,10 +58,12 @@ const LinkedInCallback = async (req, resp) => {
     const response = await getAccessToken(req.query.code);
     const access_token = response['access_token']
     const sub = response['user_data']['sub']
-    resp.redirect(`http://localhost:5173/callback?access_token=${access_token}&sub=${sub}`)
+    const url = process.env.FRONTEND_URL + 'callback'
+    resp.redirect(`${url}?access_token=${access_token}&sub=${sub}`)
   } catch (error) {
+    const url = process.env.FRONTEND_URL + 'login'
     console.error(error);
-    resp.redirect(`http://localhost:5173/login`)
+    resp.redirect(url)
   }
 };
 
